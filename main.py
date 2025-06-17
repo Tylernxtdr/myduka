@@ -1,4 +1,5 @@
 from flask import Flask,render_template
+from database import get_products
 
 #creating a flask instance
 app = Flask(__name__)
@@ -9,8 +10,8 @@ app = Flask(__name__)
 
 @app.route('/') #rule -> defines a path a user accesses in the browser & endpoint - name of view function
 def product(): # view function
-    product = "rice"
-    return render_template("products.html",data = product)
+    products=get_products()
+    return render_template("products.html",data = products)
 
 
 @app.route('/sales')

@@ -1,5 +1,5 @@
 from flask import Flask,render_template
-from database import get_products
+from database import get_products,get_sales
 
 #creating a flask instance
 app = Flask(__name__)
@@ -10,14 +10,14 @@ app = Flask(__name__)
 
 @app.route('/') #rule -> defines a path a user accesses in the browser & endpoint - name of view function
 def product(): # view function
-    products=get_products()
+    products =get_products()
     return render_template("products.html",data = products)
 
 
 @app.route('/sales')
 def sale():
-    sale = 200
-    return render_template("sales.html",data2 = sale)
+    sales = get_sales()
+    return render_template("sales.html",data2 = sales)
 
 @app.route('/dashboard')
 def dboard():
@@ -33,5 +33,11 @@ def login():
 def register():
     rg = "Register a new account"
     return render_template("register.html",data5 = rg)
+
+@app.route('/products')
+def prod():
+    products = get_products()
+    return render_template("products.html",data=products)
+
 
 app.run(debug=True)

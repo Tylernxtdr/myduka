@@ -10,14 +10,12 @@ def get_products():
     products = cur.fetchall()
     return products
 
-product_data = get_products()
-print(product_data)
+
 
 cur.execute("insert into products(name,buying_price,selling_price)values('eggs',12,15)")
 conn.commit()
 
-product_data = get_products()
-print(product_data)
+
 
 def insert_products(values) :
     insert_query = "insert into products(name,buying_price,selling_price)values(%s,%s,%s)"
@@ -25,34 +23,36 @@ def insert_products(values) :
     conn.commit()
 
 
-product_values1 = ('shoes',1500,3000)
-product_values2 = ('phone',30000,50000)
+# product_values1 = ('shoes',1500,3000)
+# product_values2 = ('phone',30000,50000)
 
-insert_products(product_values1)
-insert_products(product_values2)
+# insert_products(product_values1)
+# insert_products(product_values2)
 
-products = get_products()
-print(products)
 
 def get_sales():
     cur.execute("select * from sales")
     sales = cur.fetchall()
     return sales
 
-product_data = get_sales()
-print(product_data)
+
 
 def insert_sales(values):
-    insert_query = "insert into sales(pid,quantity,created_at)values(%s,%s,%s)"
-    cur.execute(insert_query,values)
+    insert_sales = "insert into sales(pid,quantity,created_at)values(%s,%s,now())"
+    cur.execute(insert_sales,values)
     conn.commit()
 
-sales1 = (1,300,'now{}')
-sales2 = (2,100,'now{}')
 
-insert_sales(sales1)
-insert_sales(sales2)
+def insert_stock(values):
+    insert_stock = "insert into stock(pid,stock_quantity,created_at)values(%s,%s,now())"
+    cur.execute(insert_stock,values)
+    conn.commit()
 
 
-sales = get_sales()
-print(sales)
+def get_stock():
+    cur.execute ("Select * from stock;")
+    stock = cur.fetchall()
+    return stock
+
+stock = get_stock()
+print(stock)

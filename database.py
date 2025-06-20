@@ -23,12 +23,6 @@ def insert_products(values) :
     conn.commit()
 
 
-# product_values1 = ('shoes',1500,3000)
-# product_values2 = ('phone',30000,50000)
-
-# insert_products(product_values1)
-# insert_products(product_values2)
-
 
 def get_sales():
     cur.execute("select * from sales")
@@ -54,5 +48,12 @@ def get_stock():
     stock = cur.fetchall()
     return stock
 
-stock = get_stock()
-print(stock)
+
+
+# Attempt to update stock after making a sale
+# only make sales if you have enough stock
+# write the following  sql queries:
+    # sales per day
+    # sales per product
+    # profit per day
+    # profit per product

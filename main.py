@@ -1,5 +1,5 @@
 from flask import Flask,render_template,request,redirect,url_for
-from database import get_products,get_sales,insert_products,insert_stock,get_stock
+from database import get_products,get_sales,insert_products,insert_stock,get_stock,insert_sales
 
 #creating a flask instance
 app = Flask(__name__)
@@ -17,7 +17,8 @@ def product(): # view function
 @app.route('/sales')
 def sale():
     sales = get_sales()
-    return render_template("sales.html",data2 = sales)
+    products=get_products()
+    return render_template("sales.html",data2 = sales,products=products)
 
 @app.route('/')
 def dboard():
@@ -61,9 +62,18 @@ def stck():
 def add_stck():
     pid = request.form['pid']
     stock_quantity = request.form['stock']
-    new_stock = (pid,stock_quantity)
-    insert_stock(new_stock)
+    new_sale = (pid,stock_quantity)
+    insert_sales(new_sale)
     return redirect (url_for('stck')) # pass view function in brackets
+
+
+@app.route('/add_sale',methods=['GET','POST'])
+def add_sale():
+    product_id= request.form['product_id']
+    quantity = request.form['quantity']
+    new_sale = (product_id,quantity)
+    insert_sales(new_sale)
+    return redirect(url_for('sale'))
 
 
 

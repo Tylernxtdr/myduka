@@ -54,6 +54,31 @@ def get_stock():
 # only make sales if you have enough stock
 # write the following  sql queries:
     # sales per day
-    # sales per product
     # profit per day
-    # profit per product
+
+def get_sales_per_product():
+    cur.execute(""" Select products.name , sum(sales.quantity * products.selling_price)
+                 as revenue from products join sales on products.id = sales.pid group by (products.name); """)
+    sale_per_prod = cur.fetchall()
+    return sale_per_prod
+
+def get_profit_per_prod():
+    cur.execute(""" Select name , sum(quantity * (selling_price - buying_price)) as profit_per_prod from products
+                 join sales on products.id=sales.pid group by name;
+                 """)
+    profit_per_prod = cur.fetchall()
+    return profit_per_prod
+
+def get_sales_per_day():
+    cur.execute("""Select sum(quantity * selling_price),created_at from products
+                 join sales on products.id = sales.pid group by created_at;
+        """)
+    sale_per_day = cur.fetchall()
+    return sale_per_day
+
+def profit_per_day():
+    cur.execute("""Select sum(selling_price - buying_price),created_at from products
+                 join sales on products.id = sales.pid group by created_at;
+            """)
+    profit_per_day = cur.fetchall()
+    return profit_per_day
